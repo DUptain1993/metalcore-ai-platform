@@ -1,0 +1,44 @@
+# Stage 4 - Vocals (RVC + FX scream chain) configuration.
+# Consumed by rvc_training (see rvc_training/config.py::RVCConfig).
+
+# --- Vocal isolation (Demucs) ---
+demucs_model: htdemucs        # 4-stem model; we keep the 'vocals' stem
+
+# --- Dataset preparation ---
+prep_sample_rate: 40000       # RVC v2 training rate (40k or 48k)
+segment_seconds: 4.0          # length of training clips
+min_segment_seconds: 1.2      # drop shorter fragments
+silence_top_db: 30.0          # librosa split threshold (dB below peak)
+min_rms_db: -45.0             # drop near-silent segments
+max_minutes_per_speaker: 15.0 # cap per vocalist to balance the blend
+
+# How to combine the three vocalists:
+#   merged      -> pool all three into ONE dataset and train a single blended voice
+#   per_speaker -> keep separate datasets to train one model per vocalist
+blend_mode: merged
+
+# --- RVC integration (external repo) ---
+# Path to a clone of RVC-Project/Retrieval-based-Voice-Conversion-WebUI and the
+# python used to run it. The Kaggle notebook clones this and installs its deps.
+rvc_repo: /kaggle/working/Retrieval-based-Voice-Conversion-WebUI
+rvc_python: python
+f0_method: rmvpe              # rmvpe (best) | crepe | harvest | pm
+epochs: 200
+batch_size: 8
+save_every_epoch: 50
+cache_in_gpu: false
+
+# --- Inference / conversion ---
+transpose: 0                  # semitones to shift the TTS input (0 = none)
+index_rate: 0.75             # timbre-vs-articulation blend from the feature index
+protect: 0.33                 # protect voiceless consonants (0..0.5)
+
+# --- TTS front-end (Piper) ---
+# Piper voice model (.onnx). Download one and point here; see docs/VOCALS_GUIDE.md.
+piper_voice: /kaggle/working/piper_voices/en_US-ljspeech-high.onnx
+tts_sample_rate: 22050
+
+# --- Vocal style FX applied AFTER RVC conversion ---
+# One of: clean, harsh, scream. Controls the distortion/formant chain.
+vocal_style: harsh
+fx_dry_wet: 1.0

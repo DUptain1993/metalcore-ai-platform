@@ -1,0 +1,15 @@
+# Stage 3 - Lyrics QLoRA fine-tuning (GPU / Kaggle).
+# Install with:  pip install -r requirements-lyrics.txt
+#
+# NOTE: torch is intentionally NOT pinned (see requirements-music.txt). Use the
+# torch build that ships with Kaggle. bitsandbytes requires a CUDA GPU.
+
+transformers==4.44.2
+peft==0.12.0
+accelerate==0.33.0
+trl==0.9.6
+datasets==2.21.0
+bitsandbytes==0.43.3
+sentencepiece==0.2.0
+PyYAML==6.0.2
+tqdm==4.66.5

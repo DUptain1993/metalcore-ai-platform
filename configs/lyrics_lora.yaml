@@ -1,0 +1,67 @@
+# Stage 3 - Lyrics QLoRA fine-tuning configuration.
+# Consumed by lyric_training (see lyric_training/config.py::LyricsLoRAConfig).
+
+# Base instruct model. Default fits a T4 comfortably in 4-bit. Swap to a 3B
+# model (e.g. meta-llama/Llama-3.2-3B-Instruct) for higher quality if you have
+# access; both train in 4-bit within ~6-9 GB.
+model_id: Qwen/Qwen2.5-1.5B-Instruct
+
+# QLoRA / bitsandbytes 4-bit settings.
+load_in_4bit: true
+bnb_4bit_quant_type: nf4
+bnb_4bit_use_double_quant: true
+bnb_4bit_compute_dtype: bfloat16   # falls back to fp16 automatically on T4
+
+# LoRA hyper-parameters.
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+# Optimisation.
+learning_rate: 2.0e-4
+weight_decay: 0.0
+warmup_ratio: 0.03
+num_train_epochs: 3
+batch_size: 2
+grad_accum_steps: 4
+max_grad_norm: 0.3
+max_seq_length: 1024
+
+# Checkpointing.
+save_steps: 100
+logging_steps: 10
+keep_last_checkpoints: 2
+
+# Fraction of lyric files held out for evaluation.
+val_ratio: 0.1
+
+# Song structure enforced at inference time.
+sections:
+  - Verse
+  - Chorus
+  - Verse
+  - Bridge
+  - Breakdown
+  - Final Chorus
+
+# Themes the model is encouraged to explore (used for prompt conditioning and,
+# when a lyric file has no explicit tags, for keyword-based theme inference).
+themes:
+  - depression
+  - recovery
+  - addiction
+  - self destruction
+  - hope
+  - betrayal
+  - resilience
+  - emotional struggle
+
+seed: 42

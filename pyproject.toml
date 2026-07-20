@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metalcore-ai"
+version = "0.1.0"
+description = "Open-source metalcore music/lyrics generation pipelines for Kaggle GPUs."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Metalcore AI" }]
+dependencies = [
+    "numpy<2.0",
+    "PyYAML>=6.0",
+    "tqdm>=4.66",
+]
+
+# Stage-specific extras. Heavy GPU deps live in the requirements-*.txt files so
+# they can be installed selectively per Kaggle notebook.
+[project.optional-dependencies]
+dataset = [
+    "librosa==0.10.2.post1",
+    "soundfile==0.12.1",
+    "pyloudnorm==0.1.1",
+    "pydub==0.25.1",
+]
+
+[tool.setuptools]
+packages = [
+    "metalcore",
+    "dataset_tools",
+    "music_training",
+    "lyric_training",
+    "rvc_training",
+    "inference",
+]
+
+[project.scripts]
+metalcore-dataset = "dataset_tools.cli:main"
+metalcore-music = "music_training.cli:main"
+metalcore-lyrics = "lyric_training.cli:main"
+metalcore-vocals = "rvc_training.cli:main"
+metalcore-assemble = "inference.cli:main"

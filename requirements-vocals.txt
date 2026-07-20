@@ -1,0 +1,18 @@
+# Stage 4 - Vocals (GPU / Kaggle).
+# Install with:  pip install -r requirements-vocals.txt
+#
+# NOTE: torch is intentionally NOT pinned (use Kaggle's preinstalled CUDA build).
+#
+# RVC itself is NOT a pip dependency here. It is integrated by cloning the
+# MIT-licensed RVC-Project repo and downloading its pretrained weights (see
+# docs/VOCALS_GUIDE.md and rvc_training/rvc.py::setup). RVC's own requirements
+# are installed separately inside the Kaggle notebook against that clone.
+
+demucs==4.0.1            # vocal isolation for dataset building
+piper-tts==1.2.0         # TTS front-end (MIT); spoken-cadence base voice
+librosa==0.10.2.post1
+soundfile==0.12.1
+scipy>=1.10,<1.14
+numpy<2.0
+PyYAML==6.0.2
+tqdm==4.66.5

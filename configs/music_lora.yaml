@@ -1,0 +1,43 @@
+# Stage 2 - MusicGen LoRA fine-tuning configuration.
+# Consumed by music_training (see music_training/config.py::MusicLoRAConfig).
+
+# Base model. Options (VRAM roughly): facebook/musicgen-small (~4-6 GB),
+# facebook/musicgen-medium (~10-14 GB with LoRA + grad checkpointing on a T4).
+model_id: facebook/musicgen-medium
+
+# LoRA hyper-parameters. Targets the decoder self/cross-attention projections.
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - out_proj
+
+# Optimisation.
+learning_rate: 2.0e-4
+weight_decay: 0.0
+warmup_steps: 50
+max_steps: 2000
+batch_size: 1
+grad_accum_steps: 8
+max_grad_norm: 1.0
+guidance_dropout: 0.1     # prob. of dropping the text condition (classifier-free)
+
+# Precision / memory. fp16 AMP + gradient checkpointing fit medium on a T4.
+mixed_precision: fp16     # one of: fp16, bf16, no
+gradient_checkpointing: true
+
+# Chunk length in seconds used for training (must be <= dataset chunk length).
+train_seconds: 15.0
+
+# Checkpointing / validation cadence (in optimiser steps).
+save_every: 200
+val_every: 500
+keep_last_checkpoints: 2
+
+# Validation generation.
+val_prompt: "aggressive modern metalcore breakdown, downtuned guitars, double bass"
+val_seconds: 8.0
+seed: 42

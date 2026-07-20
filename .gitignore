@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Local scratch / caches
+.tmp/
+.cache/
+*.log
+
+# Data & model artefacts (keep the repo lean; store these on Kaggle Datasets)
+data/
+outputs/*
+!outputs/.gitkeep
+*.wav
+*.mp3
+*.flac
+*.npy
+*.mmap
+*.bin
+*.safetensors
+checkpoints/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local state & personal scratch (not part of the project)
+.claude/
+c.txt
+scratchpad/
+
+# Quarantined invalid audio produced by Stage 1 validation
+quarantine/

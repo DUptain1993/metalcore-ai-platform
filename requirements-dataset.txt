@@ -1,0 +1,12 @@
+# Stage 1 - Dataset processing (CPU only, runs anywhere including low-RAM boxes).
+# Install with:  pip install -r requirements-dataset.txt
+# System dependency: ffmpeg (preinstalled on Kaggle; `apt-get install ffmpeg` locally)
+# needed for MP3/M4A decoding via librosa/pydub.
+
+numpy<2.0
+librosa==0.10.2.post1
+soundfile==0.12.1
+pyloudnorm==0.1.1
+pydub==0.25.1
+PyYAML==6.0.2
+tqdm==4.66.5

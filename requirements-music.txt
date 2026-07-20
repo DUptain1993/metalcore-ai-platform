@@ -1,0 +1,16 @@
+# Stage 2 - MusicGen LoRA fine-tuning (GPU / Kaggle).
+# Install with:  pip install -r requirements-music.txt
+#
+# NOTE: torch is intentionally NOT pinned here. Kaggle ships a CUDA-matched
+# torch build; reinstalling it breaks GPU support and wastes disk. Use the
+# preinstalled torch. Install torch yourself only on a non-Kaggle GPU machine:
+#   pip install "torch>=2.1,<2.5" --index-url https://download.pytorch.org/whl/cu121
+
+transformers==4.44.2
+peft==0.12.0
+accelerate==0.33.0
+soundfile==0.12.1
+librosa==0.10.2.post1
+numpy<2.0
+PyYAML==6.0.2
+tqdm==4.66.5

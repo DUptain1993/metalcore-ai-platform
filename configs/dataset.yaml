@@ -1,0 +1,41 @@
+# Stage 1 - dataset processing configuration.
+# Consumed by dataset_tools (see dataset_tools/config.py::DatasetConfig).
+
+# Target sample rate for chunks. 32000 matches MusicGen's EnCodec front-end.
+sample_rate: 32000
+
+# Chunk length (seconds) and overlap between consecutive chunks.
+chunk_seconds: 15.0
+chunk_overlap: 0.0
+
+# Loudness normalisation target (LUFS, ITU-R BS.1770). -14 is a streaming-style
+# reference; the pipeline clips peaks to avoid clipping after normalisation.
+target_lufs: -14.0
+
+# Validation thresholds.
+min_duration: 2.0        # files shorter than this (seconds) are rejected
+silence_rms_db: -50.0    # tracks quieter than this overall RMS are rejected
+
+# Keep a trailing chunk only if it is at least this fraction of a full chunk;
+# kept partial chunks are zero-padded to full length so all chunks are uniform.
+keep_tail_ratio: 0.5
+
+# Train/validation split (grouped by source track to prevent leakage).
+val_ratio: 0.1
+seed: 42
+
+# Fixed style tags prepended to every auto-generated caption. Edit these to steer
+# the MusicGen fine-tune toward the sound you want.
+style_tags:
+  - aggressive modern metalcore
+  - downtuned rhythm guitar
+  - double bass drums
+  - ambient lead textures
+
+# Accepted input extensions.
+audio_exts:
+  - .wav
+  - .mp3
+  - .flac
+  - .ogg
+  - .m4a
